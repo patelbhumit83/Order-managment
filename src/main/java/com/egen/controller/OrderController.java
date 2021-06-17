@@ -3,6 +3,8 @@ package com.egen.controller;
 import com.egen.model.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.ZonedDateTime;
@@ -10,27 +12,31 @@ import java.util.Collections;
 import java.util.List;
 
 @RestController
+@RequestMapping(value = "orders")
 public class OrderController {
     /**
      * implement the following endpoints
      */
 
-    @GetMapping("order")
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Order>> getAllOrders(){
         //TODO
         return ResponseEntity.ok(Collections.singletonList(new Order("id")));
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public ResponseEntity<List<Order>> getOrderById(String id){
         //TODO
         return null;
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "interval")
     public ResponseEntity<List<Order>> getAllOrdersWithInInterval(ZonedDateTime startTime, ZonedDateTime endTime){
         //TODO
         return null;
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "zip/{zip}")
     public ResponseEntity<List<Order>> top10OrdersWithHighestDollarAmountInZip(String zip){
         //TODO
         return null;
