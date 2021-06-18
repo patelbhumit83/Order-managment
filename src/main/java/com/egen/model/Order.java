@@ -1,34 +1,80 @@
 package com.egen.model;
 
+import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
+@Entity
+@NamedQueries({
+        @NamedQuery(name = "Orders.findAll",query = "SELECT ord from Orders ord"),
+        @NamedQuery(name = "Orders.findOne",query = "SELECT ord from Orders ord WHERE ord.id=:paramOrderId")
+})
 public class Order {
-    private  String id;
-    private String order_id;
-    private String order_status;
-    private String order_customer_id;
-    private String order_item_name;
-    private String order_item_qty;
-    private String order_subtotal;
-    private String order_tax;
-    private String order_shipping_charges;
-    private String order_total;
 
-    public Order()
-    {
+    @Id
+    private String id;
 
+    @Column(name = "customer_id")
+    private Long customerId;
+
+    @Column(name = "date_ordered")
+    private Timestamp dateOrdered;
+
+    @Column(name = "expected_delivery")
+    private Timestamp expectedDelivery;
+
+    @Column(name = "item_quantity")
+    private int itemQuantity;
+
+    @Column(name = "sub_total")
+    private double subTotal;
+
+    @Column(name = "tax")
+    private double tax;
+
+    @Column(name = "shipping_charges")
+    private double shippingCharges;
+
+    @Column(name = "total")
+    private double total;
+
+    @Enumerated(EnumType.STRING)
+    private OrderEnum orderStatus;
+
+    @Column(name = "shipment_method")
+    @Enumerated(EnumType.STRING)
+    private ShipEnum shipmentMethod;
+
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "ship_id")
+    private Address shippingAddress;
+
+    @OneToMany(mappedBy = "orders", targetEntity = Items.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Items> items = new HashSet<Items>();
+
+    @OneToMany(mappedBy = "orders", targetEntity = Payments.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Payments> paymentDetails = new HashSet<Payments>();
+
+    public Order(){
+        this.id = UUID.randomUUID().toString();
     }
 
-
-    public Order(String id, String order_id, String order_status, String order_customer_id, String order_item_name, String order_item_qty, String order_subtotal, String order_tax, String order_shipping_charges, String order_total) {
-        this.id = id;
-        this.order_id = order_id;
-        this.order_status = order_status;
-        this.order_customer_id = order_customer_id;
-        this.order_item_name = order_item_name;
-        this.order_item_qty = order_item_qty;
-        this.order_subtotal = order_subtotal;
-        this.order_tax = order_tax;
-        this.order_shipping_charges = order_shipping_charges;
-        this.order_total = order_total;
+    public Order(Long customerId, Timestamp dateOrdered, Timestamp expectedDelivery, int itemQuantity, double subTotal, double tax, double shippingCharges, double total, OrderEnum orderStatus, ShipEnum shipmentMethod, Address shippingAddress, Set<Items> items, Set<Payments> paymentDetails) {
+        this.customerId = customerId;
+        this.dateOrdered = dateOrdered;
+        this.expectedDelivery = expectedDelivery;
+        this.itemQuantity = itemQuantity;
+        this.subTotal = subTotal;
+        this.tax = tax;
+        this.shippingCharges = shippingCharges;
+        this.total = total;
+        this.orderStatus = orderStatus;
+        this.shipmentMethod = shipmentMethod;
+        this.shippingAddress = shippingAddress;
+        this.items = items;
+        this.paymentDetails = paymentDetails;
     }
 
     public String getId() {
@@ -39,81 +85,107 @@ public class Order {
         this.id = id;
     }
 
-    public String getOrder_id() {
-        return order_id;
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public void setOrder_id(String order_id) {
-        this.order_id = order_id;
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
-    public String getOrder_status() {
-        return order_status;
+    public Timestamp getDateOrdered() {
+        return dateOrdered;
     }
 
-    public void setOrder_status(String order_status) {
-        this.order_status = order_status;
+    public void setDateOrdered(Timestamp dateOrdered) {
+        this.dateOrdered = dateOrdered;
     }
 
-    public String getOrder_customer_id() {
-        return order_customer_id;
+    public Timestamp getExpectedDelivery() {
+        return expectedDelivery;
     }
 
-    public void setOrder_customer_id(String order_customer_id) {
-        this.order_customer_id = order_customer_id;
+    public void setExpectedDelivery(Timestamp expectedDelivery) {
+        this.expectedDelivery = expectedDelivery;
     }
 
-    public String getOrder_item_name() {
-        return order_item_name;
+    public int getItemQuantity() {
+        return itemQuantity;
     }
 
-    public void setOrder_item_name(String order_item_name) {
-        this.order_item_name = order_item_name;
+    public void setItemQuantity(int itemQuantity) {
+        this.itemQuantity = itemQuantity;
     }
 
-    public String getOrder_item_qty() {
-        return order_item_qty;
+    public double getSubTotal() {
+        return subTotal;
     }
 
-    public void setOrder_item_qty(String order_item_qty) {
-        this.order_item_qty = order_item_qty;
+    public void setSubTotal(double subTotal) {
+        this.subTotal = subTotal;
     }
 
-    public String getOrder_subtotal() {
-        return order_subtotal;
+    public double getTax() {
+        return tax;
     }
 
-    public void setOrder_subtotal(String order_subtotal) {
-        this.order_subtotal = order_subtotal;
+    public void setTax(double tax) {
+        this.tax = tax;
     }
 
-    public String getOrder_tax() {
-        return order_tax;
+    public double getShippingCharges() {
+        return shippingCharges;
     }
 
-    public void setOrder_tax(String order_tax) {
-        this.order_tax = order_tax;
+    public void setShippingCharges(double shippingCharges) {
+        this.shippingCharges = shippingCharges;
     }
 
-    public String getOrder_shipping_charges() {
-        return order_shipping_charges;
+    public double getTotal() {
+        return total;
     }
 
-    public void setOrder_shipping_charges(String order_shipping_charges) {
-        this.order_shipping_charges = order_shipping_charges;
+    public void setTotal(double total) {
+        this.total = total;
     }
 
-    public String getOrder_total() {
-        return order_total;
+    public OrderEnum getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setOrder_total(String order_total) {
-        this.order_total = order_total;
+    public void setOrderStatus(OrderEnum orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
-    public Order(String id){
-        this.id = id;
+    public ShipEnum getShipmentMethod() {
+        return shipmentMethod;
     }
 
+    public void setShipmentMethod(ShipEnum shipmentMethod) {
+        this.shipmentMethod = shipmentMethod;
+    }
 
+    public Address getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(Address shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
+    public Set<Items> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<Items> items) {
+        this.items = items;
+    }
+
+    public Set<Payments> getPaymentDetails() {
+        return paymentDetails;
+    }
+
+    public void setPaymentDetails(Set<Payments> paymentDetails) {
+        this.paymentDetails = paymentDetails;
+    }
 }
