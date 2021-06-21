@@ -11,6 +11,7 @@ import java.util.UUID;
         @NamedQuery(name = "Orders.findAll",query = "SELECT ord from Orders ord"),
         @NamedQuery(name = "Orders.findOne",query = "SELECT ord from Orders ord WHERE ord.id=:paramOrderId")
 })
+@Table(name = "Orders")
 public class Order {
 
     @Id

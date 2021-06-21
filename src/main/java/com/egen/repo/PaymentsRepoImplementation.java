@@ -23,7 +23,7 @@ public class PaymentsRepoImplementation implements PaymentsRepo{
         Timestamp payment_date = new Timestamp(date.getTime());
         for(int i=0; i< paymentsList.size(); i++)
         {
-            Payments p = new Payments(paymentsList.get(i).getAmount(), paymentsList.get(i).getOrder_payment_method(),payment_date.toString(), paymentsList.get(i).getOrder_payment_confirmation_number(), address, order);
+            Payments p = new Payments(paymentsList.get(i).getAmount(), paymentsList.get(i).getOrderPaymentMethod(),payment_date.toString(), paymentsList.get(i).getOrderPaymentConfirmationNumber(), address, order);
             entityManager.persist(p);
         }
     }

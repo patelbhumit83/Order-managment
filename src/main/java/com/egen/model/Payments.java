@@ -9,9 +9,9 @@ public class Payments {
     @Id
     private String id;
     private String amount;
-    private String order_payment_method;
-    private String order_payment_date;
-    private String order_payment_confirmation_number;
+    private String orderPaymentMethod;
+    private String orderPaymentDate;
+    private String orderPaymentConfirmationNumber;
 
     @OneToOne
     private Address billingAddress;
@@ -40,28 +40,28 @@ public class Payments {
         this.amount = amount;
     }
 
-    public String getOrder_payment_method() {
-        return order_payment_method;
+    public String getOrderPaymentMethod() {
+        return orderPaymentMethod;
     }
 
-    public void setOrder_payment_method(String order_payment_method) {
-        this.order_payment_method = order_payment_method;
+    public void setOrderPaymentMethod(String orderPaymentMethod) {
+        this.orderPaymentMethod = orderPaymentMethod;
     }
 
-    public String getOrder_payment_date() {
-        return order_payment_date;
+    public String getOrderPaymentDate() {
+        return orderPaymentDate;
     }
 
-    public void setOrder_payment_date(String order_payment_date) {
-        this.order_payment_date = order_payment_date;
+    public void setOrderPaymentDate(String orderPaymentDate) {
+        this.orderPaymentDate = orderPaymentDate;
     }
 
-    public String getOrder_payment_confirmation_number() {
-        return order_payment_confirmation_number;
+    public String getOrderPaymentConfirmationNumber() {
+        return orderPaymentConfirmationNumber;
     }
 
-    public void setOrder_payment_confirmation_number(String order_payment_confirmation_number) {
-        this.order_payment_confirmation_number = order_payment_confirmation_number;
+    public void setOrderPaymentConfirmationNumber(String orderPaymentConfirmationNumber) {
+        this.orderPaymentConfirmationNumber = orderPaymentConfirmationNumber;
     }
 
     public Address getBillingAddress() {
@@ -82,9 +82,9 @@ public class Payments {
 
     public Payments(String amount, String order_payment_method, String order_payment_date, String order_payment_confirmation_number, Address billingAddress, Order order) {
         this.amount = amount;
-        this.order_payment_method = order_payment_method;
-        this.order_payment_date = order_payment_date;
-        this.order_payment_confirmation_number = order_payment_confirmation_number;
+        this.orderPaymentMethod = order_payment_method;
+        this.orderPaymentDate = order_payment_date;
+        this.orderPaymentConfirmationNumber = order_payment_confirmation_number;
         this.billingAddress = billingAddress;
         this.order = order;
     }
